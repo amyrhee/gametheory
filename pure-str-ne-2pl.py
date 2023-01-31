@@ -62,3 +62,4 @@ print('The pure NE are the following strategy profiles (row pl. strategy index, 
       gamma.pure_ne())
 
 print('The respective payoffs are: ', gamma.pure_ne_payoffs())
+
