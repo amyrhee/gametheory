@@ -33,9 +33,8 @@ class bimatrix:
         self.pure_neq = ne
         
         if len(ne) == 0:
-            print("No pure NE found.")
-        else:
-            return ne
+            ne = 'No pure NE found.'
+        return ne
     
     def pure_ne_payoffs(self):
         big_mat = np.dstack(((self.mat_r, self.mat_c)))
