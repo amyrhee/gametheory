@@ -6,8 +6,6 @@ This script allows you to find pure strategy NE of a 2 player bimatrix game.
 @author: amyrhee@nyu.edu
 """
 
-# Finding pure strategy NE in an (n x n) 2 player bimatrix game
-
 import numpy as np
 
 class bimatrix:
