@@ -98,3 +98,59 @@ class bimatrix:
         
         self.mixed_neq = np.array([row_pl(), col_pl()])
         return self.mixed_neq
+    
+    def del_dom_str(self): # add setting for printing what is the dominating strategy
+        mat_r, mat_c = self.mat_r, self.mat_c
+        
+        def row_pl(mat_r):
+            support_r = np.unique( [np.argmax(mat_r[:,i]) for i in range(mat_r.shape[0])] )
+            total_str = list(range(mat_r.shape[0]))
+            dominated_str_r = [x for x in total_str if x not in support_r]
+            
+            if len(dominated_str_r) == 0:
+                print('No dominated strategies remaining for row player.')
+                return True
+            else:
+                return support_r, dominated_str_r
+        
+        def col_pl(mat_c):
+            support_c = np.unique( [np.argmax(mat_c[i,:]) for i in range(mat_c.shape[1])] )
+            total_str = list(range(mat_c.shape[1]))
+            dominated_str_c = [x for x in total_str if x not in support_c]
+            
+            if len(dominated_str_c) == 0:
+                print('No dominated strategies remaining for col player.')
+                return True
+            else:
+                return support_c, dominated_str_c
+
+        remaining_str_r = []
+        remaining_str_c = []
+        
+        while row_pl(mat_r) != True or col_pl(mat_c) != True:
+            if row_pl(mat_r) != True and col_pl(mat_c) != True:
+                remaining_str_r.append(row_pl(mat_r)[0])
+                remaining_str_c.append(col_pl(mat_c)[0])
+    
+                mat_r = np.delete(mat_r, row_pl(mat_r)[1], axis=0)
+                mat_c = np.delete(mat_c, col_pl(mat_c)[1], axis=1)
+            
+            elif row_pl(mat_r) != True:
+                remaining_str_r.append(row_pl(mat_r)[0])
+                mat_r = np.delete(mat_r, row_pl(mat_r)[1], axis=0)
+            
+            elif col_pl(mat_c) != True:
+                remaining_str_c.append(col_pl(mat_c)[0])
+                mat_c = np.delete(mat_c, col_pl(mat_c)[1], axis=1)
+        
+        if len(remaining_str_r) != 0:
+            self.mat_c = np.array( list(map(lambda x: mat_c[x,:], np.array(remaining_str_r)))[0] )
+        else:
+            print('Row player has no dominated strategies.')
+        
+        if len(remaining_str_c) != 0:
+            self.mat_r = np.array( list(map(lambda x: mat_r[:,x], np.array(remaining_str_c)))[0] )
+        else:
+            print('Col player has no dominated strategies.')
+
+        return self.mat_r, self.mat_c
