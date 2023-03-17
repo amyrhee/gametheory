@@ -73,17 +73,18 @@ class bimatrix:
         
         def col_pl():
             k = 0
-            a_n = -1*self.mat_c[:,k].reshape((self.mat_c.shape[0],1))
-            a_tilde = self.mat_c - ((-1*a_n).T @ np.eye(self.mat_c.shape[0])).T
-            a_tilde[:,k] = -1*np.ones((self.mat_c.shape[0],))
+            mat_c = self.mat_c.T
+            a_n = -1*mat_c[:,k].reshape((mat_c.shape[0],1))
+            a_tilde = mat_c - ((-1*a_n).T @ np.eye(mat_c.shape[0])).T
+            a_tilde[:,k] = -1*np.ones((mat_c.shape[0],))
             
             while np.linalg.det(a_tilde) == 0:
                 k += 1
-                a_n = -1*self.mat_c[:,k].reshape((self.mat_c.shape[0],1))
-                a_tilde = self.mat_c - ((-1*a_n).T @ np.eye(self.mat_c.shape[0])).T
-                a_tilde[:,k] = -1*np.ones((self.mat_c.shape[0],))
+                a_n = -1*mat_c[:,k].reshape((mat_c.shape[0],1))
+                a_tilde = mat_c - ((-1*a_n).T @ np.eye(mat_c.shape[0])).T
+                a_tilde[:,k] = -1*np.ones((mat_c.shape[0],))
                 
-                if k >= len(self.mat_c) - 1:
+                if k >= len(mat_c) - 1:
                     print('Error: Payoff matrix singular')
                     break
             
