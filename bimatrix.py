@@ -48,7 +48,7 @@ class bimatrix:
         self.ne_payoffs = ne_payoffs
         return ne_payoffs
     
-    def mixed_ne(self):
+    def mixed_ne(self): # Need to redo and add in constraints
         def row_pl():
             k = 0
             a_n = -1 * self.mat_r[:,k].reshape((self.mat_r.shape[0],1))
